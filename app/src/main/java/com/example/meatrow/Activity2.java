@@ -22,6 +22,15 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import java.io.Serializable;
 
 public class Activity2 extends AppCompatActivity {
+    private static final String TAG = "Neko";
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+
+    public EditText email;
+    public EditText password;
+    public EditText name;
+
     @IgnoreExtraProperties
     static class Item implements Serializable {
         public String surname;
@@ -39,14 +48,6 @@ public class Activity2 extends AppCompatActivity {
         }
     }
 
-    private static final String TAG = "Neko";
-    private FirebaseAuth mAuth;
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
-
-    EditText email;
-    EditText password;
-    EditText name;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +81,9 @@ public class Activity2 extends AppCompatActivity {
     }
 
     public void btnSigNew(View view){
-        String email = "Art@gmail.com";
-        String password = "Password";
+        Log.d(TAG, "btn Sign New User press");
+        String email = this.email.getText().toString();
+        String password = this.password.getText().toString();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

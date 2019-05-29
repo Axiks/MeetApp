@@ -1,34 +1,31 @@
 package com.example.meatrow;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Meet{
-    public int Id;
-    public int creator_id;
-    public String Avatar;
-    public String Name;
-    public String Description;
-    public Double H_coordinates;
-    public Double W_coordinates;
-    public String Date;
-    public String  Time;
-    public Date End_meeting;
-    public Date Create_meeting;
-    public Integer UserCount;
-    public List<String> preferenceTags;
-    public List<String> SocialLinks;
+public class Meet implements Serializable {
+    //public String avatar;
+    public String name;
+    public String description;
+    public String meetStart;
+    public String meetEnd;
+    //public Double H_coordinates;
+    //public Double W_coordinates;
+    //public Date end_meeting;
+    //public Date create_meeting;
+    //public Integer userCount;
+    //public List<String> preferenceTags;
+    //public List<String> SocialLinks;
 
     public Meet(){
 
     };
 
-    public Meet(String avatar, String name, String description, String date, String time, Integer userCount){
-        Avatar = avatar;
-        Name = name;
-        Description = description;
-        Date = date;
-        Time = time;
-        UserCount = userCount;
+    public Meet(String name, String description, String meetStart, String meetEnd){
+        this.name = name;
+        this.description = description;
+        this.meetStart = meetStart;
+        this.meetEnd = meetEnd;
     }
 }

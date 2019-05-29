@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "889578701701",
+    "firebase_url": "https://meet-f86fb.firebaseio.com",
+    "project_id": "meet-f86fb",
+    "storage_bucket": "meet-f86fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889578701701:android:342131bb1765fcc3",
+        "android_client_info": {
+          "package_name": "com.example.meatrow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889578701701-4undavm29ti03hj83cj1kn7c98btc78k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.meatrow",
+            "certificate_hash": "ee5ecf3e12188bcf8a456bf60b5d0a7b4e9352ac"
+          }
+        },
+        {
+          "client_id": "889578701701-gdctfe0j312lbrp07d6j60upq882gqm5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwxclLgWqgCkBBEcF6zELtbEW2dBHqECA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889578701701-gdctfe0j312lbrp07d6j60upq882gqm5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

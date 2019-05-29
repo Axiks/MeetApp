@@ -14,33 +14,41 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recView"
             android:layout_width="match_parent"
-            android:layout_height="372dp">
+            android:layout_height="334dp">
 
         </android.support.v7.widget.RecyclerView>
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="Button" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="testActivity"
             android:text="TestNewActivity" />
+
+        <TextView
+            android:id="@+id/mainUid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="428dp"
+            android:layout_height="wrap_content"
+            android:onClick="loginActivity"
+            android:text="Login" />
+
+        <Button
+            android:id="@+id/meetCreateBtn"
+            android:layout_width="337dp"
+            android:layout_height="wrap_content"
+            android:onClick="meetCreateActivity"
+            android:text="Create Meet" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="test"
+            android:text="TEst" />
     </LinearLayout>
 </FrameLayout>

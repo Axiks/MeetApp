@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder>{
     private static final String TAG = "Neko";
-    private List<Meet> meetList = new ArrayList<>();
+    public List<Meet> meetList = new ArrayList<>();
 
     public MeetViewHolder onCreateViewHolder(ViewGroup parent, int i) {
         Log.d(TAG, "onCreateViewHolder Start");
@@ -26,7 +26,7 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder
     public void onBindViewHolder(MeetViewHolder holder, int possition) {
         Log.d(TAG, "onBindViewHolder Start");
         Log.d(TAG, "oBVH possition: " + possition);
-        Log.d(TAG, "oBVH possition: " + meetList.get(possition).Time);
+        //Log.d(TAG, "oBVH possition: " + meetList.get(possition).Time);
         holder.bind(meetList.get(possition));
         Log.d(TAG, "onBindViewHolder False");
     }
@@ -34,6 +34,12 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder
     public int getItemCount() {
         Log.d(TAG, "GetItemCount");
         return meetList.size();
+    }
+
+    public void updateReceiptsList(List<Meet> newlist) {
+        meetList.clear();
+        meetList.addAll(newlist);
+        this.notifyDataSetChanged();
     }
 
     class MeetViewHolder extends RecyclerView.ViewHolder{
@@ -58,12 +64,12 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder
 
         public void bind(Meet meet){
             Log.d(TAG, "bind Start");
-            Log.d(TAG, "bind NAme: "+meet.Name);
-            meetNameView.setText(meet.Name);
-            Log.d(TAG, "bind Desc: "+meet.Description);
-            meetDescriptionView.setText(meet.Description);
-            Log.d(TAG, "bind Count: "+meet.UserCount);
-            meetUserCountView.setText(meet.UserCount.toString());
+            Log.d(TAG, "bind NAme: "+meet.name);
+            meetNameView.setText(meet.name);
+            Log.d(TAG, "bind Desc: "+meet.description);
+            meetDescriptionView.setText(meet.description);
+            Log.d(TAG, "bind Count: "+meet.meetStart);
+            meetUserCountView.setText(meet.meetStart);
 
             Log.d(TAG, "bind End");
         }
