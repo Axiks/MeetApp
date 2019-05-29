@@ -1,5 +1,6 @@
 package com.example.meatrow;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,7 +52,7 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder
         private TextView meetTimeView;
         private TextView meetUserCountView;
 
-        public MeetViewHolder(View itemView) {
+        public MeetViewHolder(final View itemView) {
             super(itemView);
             meetAvatarView = itemView.findViewById(R.id.meet_avatar_view);
             meetNameView = itemView.findViewById(R.id.meet_name_view);
@@ -58,6 +60,20 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder
             meetDateView = itemView.findViewById(R.id.meet_date_view);
             meetTimeView = itemView.findViewById(R.id.meet_time_view);
             meetUserCountView = itemView.findViewById(R.id.meet_count_view);
+
+            //Обработчик натиснень
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    String res = meetList.get(position).id;
+                    Log.d(TAG, res);
+
+                    Intent intent = new Intent(v.getContext(), MeetProfile.class);
+                    intent.putExtra("meetId", res);
+                    v.getContext().startActivity(intent);
+                }
+            });
 
             Log.d(TAG, "MeetViewHolder");
         }

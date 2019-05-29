@@ -64,13 +64,12 @@ public class MainActivity extends AppCompatActivity {
             uId.setText(user.getUid());
         }
         else {
-            uId.setText("Вхід не виконаний");
+            Intent intent = new Intent(this, LoginRegistrateActivity.class);
+            startActivity(intent);
+            //uId.setText("Вхід не виконаний");
         }
 
         /*Meet out*/
-        Meet mmm = new Meet( "Na picu q", "Jdemo na picu 1", "2019,07,01,16,00,00","16:00");
-        meets.add(mmm);
-
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -79,12 +78,13 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG ,"Count "+snapshot.getChildrenCount());
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
                     Meet meet = postSnapshot.getValue(Meet.class);
+                    meet.id = postSnapshot.getKey();
                     meets.add(meet);
                     Log.d(TAG, "Key: " + postSnapshot.getKey());
                     Log.d(TAG, "Value: " + postSnapshot.getValue(Meet.class).name);
                 }
 
-                //Rec View 2
+                //RecView
                 Log.d(TAG, "MA create new Adapter");
                 meetAdapter = new MeetAdapter();
                 Log.d(TAG, "MA set Adapter");
@@ -92,30 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "MA loadMeet");
                 //meetAdapter.setItems(loadMeet());
                 meetAdapter.setItems(meets);
-
-//                Log.d(TAG, "Pre Name start "+ dataSnapshot.getValue(Meet.class).description);
-//                Log.d(TAG, "Succres "+dataSnapshot.getValue().toString());
-//                Meet meet = new Meet(dataSnapshot.getValue(Meet.class).name, dataSnapshot.getValue(Meet.class).description, "2019,07,04,16,00,00","16:00");
-//                Log.d(TAG, "Pre Name end "+ meet.description);
-//                meets.add(meet);
-//
-//                Log.d(TAG, "Pre SIZE "+ meets.size());
-//
-//                //Meet meet = dataSnapshot.getValue(Meet.class);
-//                //meet = new Meet("", "Na shslyk", "Jdemo na shaslyk", "2019,07,04,16,00,00","16:00", 8);
-//
-//                //Rec View 2
-//                Log.d(TAG, "MA create new Adapter");
-//                meetAdapter = new MeetAdapter();
-//                Log.d(TAG, "MA set Adapter");
-//                numbersList.setAdapter(meetAdapter);
-//                Log.d(TAG, "MA loadMeet");
-//                //meetAdapter.setItems(loadMeet());
-//                meetAdapter.setItems(meets);
-//
-//                Log.d(TAG, "Post SIZE "+ meets.size());
-//
-//                // ...
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -127,16 +103,6 @@ public class MainActivity extends AppCompatActivity {
         myRef.addValueEventListener(postListener);
 
         Log.d(TAG, "Program Launch");
-    }
-
-    private Collection<Meet> loadMeet(){
-        Meet m1 = new Meet("Na picu", "Jdemo na picu", "2019,07,01,16,00,00","16:00");
-        Meet m2 = new Meet("Na shslyk", "Jdemo na shaslyk", "2019,07,04,16,00,00","16:00");
-        Meet m3 = new Meet("Na grecku", "Jdemo grecku", "2019,07,10,16,00,00","16:00");
-        meets.add(m2);
-        meets.add(m1);
-        //meets = Arrays.asList(m1, m2, m3);
-        return meets;
     }
 
     public void testActivity(View view){
@@ -154,7 +120,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void test(View view){
+    public void test(View view)
+    {
         Log.d(TAG, "Btn SIZE "+ meets.size());
+        Intent intent = new Intent(this, MeetProfile.class);
+        //startActivity(intent);
     }
 }

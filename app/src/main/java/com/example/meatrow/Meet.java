@@ -5,11 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 public class Meet implements Serializable {
-    //public String avatar;
+    public String id;
     public String name;
     public String description;
     public String meetStart;
     public String meetEnd;
+    //public String avatar;
     //public Double H_coordinates;
     //public Double W_coordinates;
     //public Date end_meeting;
@@ -23,6 +24,15 @@ public class Meet implements Serializable {
     };
 
     public Meet(String name, String description, String meetStart, String meetEnd){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.meetStart = meetStart;
+        this.meetEnd = meetEnd;
+    };
+
+    public Meet(String id, String name, String description, String meetStart, String meetEnd){
+        this.id = id;
         this.name = name;
         this.description = description;
         this.meetStart = meetStart;

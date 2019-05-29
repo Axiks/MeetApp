@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MeetCreate"></activity>
+        <activity android:name=".MeetProfile"></activity>
+        <activity android:name=".MeetCreate" />
         <activity android:name=".ProfilActivity" />
         <activity
             android:name=".LoginRegistrateActivity"
