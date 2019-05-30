@@ -14,15 +14,9 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recView"
             android:layout_width="match_parent"
-            android:layout_height="334dp">
+            android:layout_height="477dp">
 
         </android.support.v7.widget.RecyclerView>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="testActivity"
-            android:text="TestNewActivity" />
 
         <TextView
             android:id="@+id/mainUid"
@@ -39,16 +33,10 @@
 
         <Button
             android:id="@+id/meetCreateBtn"
-            android:layout_width="337dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="meetCreateActivity"
             android:text="Create Meet" />
 
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="test"
-            android:text="TEst" />
     </LinearLayout>
 </FrameLayout>

@@ -1,5 +1,7 @@
 package com.example.meatrow;
 
+import com.google.firebase.database.ServerValue;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -10,29 +12,28 @@ public class Meet implements Serializable {
     public String description;
     public String meetStart;
     public String meetEnd;
+    public String creatorId;
     //public String avatar;
     //public Double H_coordinates;
     //public Double W_coordinates;
-    //public Date end_meeting;
-    //public Date create_meeting;
+    public String create_meeting;
     //public Integer userCount;
     //public List<String> preferenceTags;
     //public List<String> SocialLinks;
 
     public Meet(){
 
-    };
+    }
 
     public Meet(String name, String description, String meetStart, String meetEnd){
-        this.id = id;
         this.name = name;
         this.description = description;
         this.meetStart = meetStart;
         this.meetEnd = meetEnd;
-    };
+    }
 
-    public Meet(String id, String name, String description, String meetStart, String meetEnd){
-        this.id = id;
+    public Meet(String creatorId, String name, String description, String meetStart, String meetEnd){
+        this.creatorId = creatorId;
         this.name = name;
         this.description = description;
         this.meetStart = meetStart;

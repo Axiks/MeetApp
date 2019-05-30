@@ -12,15 +12,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MeetCreate extends AppCompatActivity {
     private static final String TAG = "Neko";
     private FirebaseAuth mAuth;
+    public FirebaseUser curUser;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
@@ -68,6 +77,17 @@ public class MeetCreate extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Meets");
 
+        /*User now */
+        curUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (curUser != null) {
+            //curUser.getUid();
+        }
+        else {
+            Intent intent = new Intent(this, LoginRegistrateActivity.class);
+            startActivity(intent);
+            //uId.setText("Вхід не виконаний");
+        }
+
         MeetStartData.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
             @Override
@@ -76,8 +96,8 @@ public class MeetCreate extends AppCompatActivity {
                 int mYear = year;
                 int mMonth = month;
                 int mDay = dayOfMonth;
-                meetStart = new StringBuilder().append(mMonth + 1)
-                        .append("-").append(mDay).append("-").append(mYear)
+                meetStart = new StringBuilder().append(mDay).append("/").append(mMonth + 1)
+                        .append("/").append(mYear)
                         .append(" ").toString();
             }
         });
@@ -90,8 +110,8 @@ public class MeetCreate extends AppCompatActivity {
                 int mYear = year;
                 int mMonth = month;
                 int mDay = dayOfMonth;
-                meetEnd = new StringBuilder().append(mMonth + 1)
-                        .append("-").append(mDay).append("-").append(mYear)
+                meetEnd = new StringBuilder().append(mDay).append("/").append(mMonth + 1)
+                        .append("/").append(mYear)
                         .append(" ").toString();
             }
         });
@@ -101,7 +121,13 @@ public class MeetCreate extends AppCompatActivity {
         name = Name.getText().toString();
         description = Description.getText().toString();
 
-        meet = new Meet(name, description, meetStart, meetEnd);
+        meet = new Meet(curUser.getUid(), name, description, meetStart, meetEnd);
+
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        String strDate = formatter.format(date);
+        meet.create_meeting = strDate;
+
         myRef.push().setValue(meet);
 
         Intent intent = new Intent(this, MainActivity.class);

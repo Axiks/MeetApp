@@ -1,16 +1,22 @@
 package com.example.meatrow;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,16 +24,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.nio.file.FileStore;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MeetProfile extends AppCompatActivity {
+    private static final  int PICK_IMAGE_REQURET = 1;
     private static final String TAG = "Neko";
     public FirebaseAuth uAuth;
     public DatabaseReference refMeets;
     public MeetAdapter meetAdapter;
     public Meet meet;
+    public StorageReference mStorageRef;
+    private Uri mImageUri;
 
     TextView tvCreateDate;
     TextView tvCreator;
@@ -38,6 +53,7 @@ public class MeetProfile extends AppCompatActivity {
     Button btnCome;
     Button btnEdit;
     Button btnDestroy;
+    Button btnUpload;
     ImageView imageAvatar;
     RecyclerView recTeams;
 
@@ -55,9 +71,11 @@ public class MeetProfile extends AppCompatActivity {
         btnCome = findViewById(R.id.btnCome);
         btnEdit = findViewById(R.id.btnEdit);
         btnDestroy = findViewById(R.id.btnDestroy);
+        btnUpload = findViewById(R.id.btnUpload);
         imageAvatar = findViewById(R.id.imageAvatar);
         recTeams = findViewById(R.id.recTeams);
 
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         Bundle extras = getIntent().getExtras();
         String meetID = extras.getString("meetId");
 
@@ -94,17 +112,65 @@ public class MeetProfile extends AppCompatActivity {
         };
         //refMeets.addValueEventListener(meetListener);
         query.addValueEventListener(meetListener);
+
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //uploadImage();
+                openFileChhooser();
+            }
+        });
     }
 
     public void Render(){
         Log.d(TAG, "Rendr " + meet.name);
-
+        tvCreator.setText(meet.creatorId);
+        tvCreateDate.setText(meet.create_meeting);
         tvName.setText(meet.name);
         tvDescription.setText(meet.description);
         tvDateStart.setText(meet.meetStart);
         tvDateEnd.setText(meet.meetEnd);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQURET && resultCode == RESULT_OK && resultCode == RESULT_OK
+        && data != null && data.getData() != null){
+            mImageUri = data.getData();
+
+            Picasso.get().load(mImageUri).into(imageAvatar);
+        }
+    }
+
+    public void uploadImage(){
+//        Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
+//        StorageReference riversRef = mStorageRef.child("images/rivers.jpg");
+//
+//        riversRef.putFile(file)
+//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                        // Get a URL to the uploaded content
+//                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(Exception exception) {
+//                        // Handle unsuccessful uploads
+//                        // ...
+//                    }
+//                });
+    }
+
+    public void openFileChhooser(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQURET);
+    }
     //Create data
     //Autor id create
     //Avatar
