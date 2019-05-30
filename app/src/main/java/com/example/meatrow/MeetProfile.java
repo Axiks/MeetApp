@@ -1,5 +1,6 @@
 package com.example.meatrow;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -128,7 +130,6 @@ public class MeetProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openFileChhooser();
-
             }
         });
     }
@@ -152,71 +153,46 @@ public class MeetProfile extends AppCompatActivity {
             mImageUri = data.getData(); //patch
 
             Picasso.get().load(mImageUri).into(imageAvatar);
-        }
-    }
 
-    private String getFileExtension(Uri uri){
-        ContentResolver cR = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(cR.getType(uri));
+            uploadImage(); //Upload Img to Server
+        }
     }
 
     //update user info
     private void uploadImage(){
         if(mImageUri != null){
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Upload...");
+            progressDialog.show();
+
             StorageReference reference = mStorageRef.child("images/" + UUID.randomUUID().toString());
             reference.putFile(mImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Toast.makeText(MeetProfile.this, "Upload succeful", Toast.LENGTH_SHORT).show();
+                            progressDialog.cancel();
+
+                            //Добавлення записі об фотці в бд
                         }
-                    });
-
-//            StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()+ "."
-//                    + getFileExtension(mImageUri));
-//            fileReference.putFile(mImageUri)
-//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            Toast.makeText(MeetProfile.this, "Upload succeful", Toast.LENGTH_SHORT).show();
-//                            Upload upload = new Upload("File namee", taskSnapshot. );
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Toast.makeText(MeetProfile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    })
-//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-//                            //Progress bar
-//                        }
-//                    });
-
+                    })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(MeetProfile.this, "Unsuccessful uploads", Toast.LENGTH_SHORT).show();
+                }
+            })
+            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                    progressDialog.setMessage("Upload "+(int)progress+"%");
+                }
+            })
+            ;
         }else {
             Toast.makeText(this, "No file seelcted", Toast.LENGTH_SHORT).show();
         }
-//        Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
-//        StorageReference riversRef = mStorageRef.child("images/rivers.jpg");
-//
-//        riversRef.putFile(file)
-//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                        // Get a URL to the uploaded content
-//                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(Exception exception) {
-//                        // Handle unsuccessful uploads
-//                        // ...
-//                    }
-//                });
     }
 
     public void openFileChhooser(){
@@ -227,8 +203,9 @@ public class MeetProfile extends AppCompatActivity {
     }
 
     public void Tets(View view){
-        uploadImage();
+        //uploadImage();
     }
+
     //Create data
     //Autor id create
     //Avatar

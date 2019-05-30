@@ -21,8 +21,6 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/meatrow/MeetProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/meatrow/MeetProfile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/meatrow/Upload.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/meatrow/Upload.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_meet_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_meet_profile.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,16 +79,16 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gradle" value="36" />
-          <entry key="java" value="6841" />
-          <entry key="txt" value="643" />
+          <entry key="java" value="7047" />
+          <entry key="txt" value="674" />
           <entry key="xml" value="280" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Groovy" value="36" />
-          <entry key="JAVA" value="6841" />
-          <entry key="PLAIN_TEXT" value="643" />
+          <entry key="JAVA" value="7047" />
+          <entry key="PLAIN_TEXT" value="674" />
           <entry key="XML" value="280" />
         </counts>
       </usages-collector>
@@ -101,24 +99,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/meatrow/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
+            <state relative-caret-position="531">
               <caret line="61" column="9" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="25" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/meatrow/MeetProfile.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="229" column="22" selection-start-line="229" selection-start-column="22" selection-end-line="229" selection-end-column="22" />
+            <state relative-caret-position="335">
+              <caret line="173" column="52" lean-forward="true" selection-start-line="173" selection-start-column="52" selection-end-line="173" selection-end-column="52" />
               <folding>
                 <element signature="e#4835#4988#0" expanded="true" />
                 <element signature="e#4987#4988#0" expanded="true" />
                 <element signature="e#6372#6619#0" expanded="true" />
                 <element signature="e#6618#6619#0" expanded="true" />
-                <element signature="e#9198#9199#0" expanded="true" />
-                <element signature="e#9227#9228#0" expanded="true" />
+                <element signature="e#6652#6902#0" expanded="true" />
+                <element signature="e#6901#6902#0" expanded="true" />
+                <element signature="e#6939#7154#0" expanded="true" />
+                <element signature="e#7153#7154#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -127,7 +127,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/meatrow/Upload.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="-51">
               <caret column="2" selection-start-column="2" selection-end-column="2" />
               <folding>
                 <element signature="e#350#351#0" expanded="true" />
@@ -146,22 +146,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/meatrow/MeetAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-311">
-              <caret line="68" column="55" selection-start-line="68" selection-start-column="55" selection-end-line="68" selection-end-column="55" />
+            <state relative-caret-position="38">
+              <caret line="79" selection-start-line="79" selection-end-line="79" />
               <folding>
                 <element signature="e#2435#2915#0" expanded="true" />
                 <element signature="e#2914#2915#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_meet_profile.xml">
-          <provider selected="true" editor-type-id="android-designer2" />
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="2363">
-              <caret line="152" selection-start-line="152" selection-end-line="152" />
             </state>
           </provider>
         </entry>
@@ -255,8 +245,8 @@
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/meatrow/Upload.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/meatrow/MeetProfile.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_meet_profile.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/meatrow/MeetProfile.java" />
       </list>
     </option>
   </component>
@@ -427,7 +417,14 @@
       <option name="project" value="LOCAL" />
       <updated>1559239676451</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Prirmitive Avatar Meet Load">
+      <created>1559247272456</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1559247272456</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView">
@@ -458,7 +455,7 @@
       <window_info anchor="bottom" id="Terminal" order="4" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="6" weight="0.32867134" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.22657342" />
+      <window_info active="true" anchor="bottom" id="Build" order="7" visible="true" weight="0.22657342" />
       <window_info anchor="bottom" id="Android Profiler" order="8" />
       <window_info anchor="bottom" id="Messages" order="9" weight="0.32867134" />
       <window_info anchor="bottom" id="Find" order="10" weight="0.32867134" />
@@ -468,7 +465,7 @@
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info anchor="right" id="Android WiFi ADB" order="4" weight="0.17181209" />
       <window_info anchor="right" id="Palette&#9;" order="5" />
-      <window_info anchor="right" id="Assistant" order="6" weight="0.25503355" />
+      <window_info anchor="right" id="Assistant" order="6" weight="0.38389263" />
       <window_info anchor="right" id="Preview" order="7" />
     </layout>
     <layout-to-restore>
@@ -518,7 +515,8 @@
     <MESSAGE value="Add FirebaseDB Func&#10;Add meet Func&#10;Add Login or Register Func&#10;Add View meets Func" />
     <MESSAGE value="Add meet Profile Func" />
     <MESSAGE value="Add meet View Func" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add meet View Func" />
+    <MESSAGE value="Prirmitive Avatar Meet Load" />
+    <option name="LAST_COMMIT_MESSAGE" value="Prirmitive Avatar Meet Load" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/meatrow/NumbersAdapter.java">
@@ -605,13 +603,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/meatrow/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="61" column="9" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/meatrow/Meet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -655,9 +646,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_meet_profile.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="2363">
+          <caret line="152" selection-start-line="152" selection-end-line="152" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/meatrow/MeetAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="79" selection-start-line="79" selection-end-line="79" />
+          <folding>
+            <element signature="e#2435#2915#0" expanded="true" />
+            <element signature="e#2914#2915#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/meatrow/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="531">
+          <caret line="61" column="9" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/meatrow/Upload.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="-51">
           <caret column="2" selection-start-column="2" selection-end-column="2" />
           <folding>
             <element signature="e#350#351#0" expanded="true" />
@@ -672,37 +689,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/meatrow/MeetAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-311">
-          <caret line="68" column="55" selection-start-line="68" selection-start-column="55" selection-end-line="68" selection-end-column="55" />
-          <folding>
-            <element signature="e#2435#2915#0" expanded="true" />
-            <element signature="e#2914#2915#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/meatrow/MeetProfile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="229" column="22" selection-start-line="229" selection-start-column="22" selection-end-line="229" selection-end-column="22" />
+        <state relative-caret-position="335">
+          <caret line="173" column="52" lean-forward="true" selection-start-line="173" selection-start-column="52" selection-end-line="173" selection-end-column="52" />
           <folding>
             <element signature="e#4835#4988#0" expanded="true" />
             <element signature="e#4987#4988#0" expanded="true" />
             <element signature="e#6372#6619#0" expanded="true" />
             <element signature="e#6618#6619#0" expanded="true" />
-            <element signature="e#9198#9199#0" expanded="true" />
-            <element signature="e#9227#9228#0" expanded="true" />
+            <element signature="e#6652#6902#0" expanded="true" />
+            <element signature="e#6901#6902#0" expanded="true" />
+            <element signature="e#6939#7154#0" expanded="true" />
+            <element signature="e#7153#7154#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_meet_profile.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="2363">
-          <caret line="152" selection-start-line="152" selection-end-line="152" />
         </state>
       </provider>
     </entry>
