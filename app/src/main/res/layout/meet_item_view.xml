@@ -5,14 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="300dp"
     android:padding="8dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:elevation="12dp"
+    app:cardCornerRadius="40dp">
+
 
 
     <ImageView
         android:id="@+id/meet_avatar_view"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        tools:srcCompat="@tools:sample/avatars"
+        android:scaleType="centerCrop"
+        />
 
     <TextView
         android:id="@+id/meet_name_view"

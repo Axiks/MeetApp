@@ -105,11 +105,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "Program Launch");
     }
 
-    public void testActivity(View view){
-        Intent intent = new Intent(this, Activity2.class);
-        startActivity(intent);
-    }
-
     public void loginActivity(View view){
         Intent intent = new Intent(this, LoginRegistrateActivity.class);
         startActivity(intent);
@@ -120,10 +115,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void test(View view)
-    {
-        Log.d(TAG, "Btn SIZE "+ meets.size());
-        Intent intent = new Intent(this, MeetProfile.class);
-        //startActivity(intent);
-    }
 }

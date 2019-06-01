@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -86,7 +88,10 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder
             meetDescriptionView.setText(meet.description);
             Log.d(TAG, "bind Count: "+meet.meetStart);
             meetUserCountView.setText(meet.meetStart);
-
+            //meetAvatarView.
+            Picasso.get().load(meet.getAvatar()).into(meetAvatarView);
+            //Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/meet-f86fb.appspot.com/o/uploads%2Fimages%2Fd40376b4-f54e-4487-8c20-416782459c10?alt=media&token=cb89bb54-a963-474e-8886-03a7e0c827a4").into(meetAvatarView);
+            //Log.d(TAG, "mmmmmm: " + meet.getAvatarHref());
             Log.d(TAG, "bind End");
         }
     }
@@ -96,11 +101,6 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder
         meetList.addAll(meets);
         notifyDataSetChanged();
         Log.d(TAG, "Set item Meet List Close");
-    }
-
-    public void setTest(){
-        notifyDataSetChanged();
-        Log.d(TAG, "Set item Test Meet List");
     }
 
     public  void clearItems(){

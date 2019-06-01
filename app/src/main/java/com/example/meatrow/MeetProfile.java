@@ -51,7 +51,7 @@ public class MeetProfile extends AppCompatActivity {
     private static final String TAG = "Neko";
     public FirebaseAuth uAuth;
     public DatabaseReference refMeets;//
-    public MeetAdapter meetAdapter;
+    public MeetAdapter participantsAdapter;
     public Meet meet;
     public StorageReference mStorageRef;//
     private Uri mImageUri;//
@@ -142,6 +142,7 @@ public class MeetProfile extends AppCompatActivity {
         tvDescription.setText(meet.description);
         tvDateStart.setText(meet.meetStart);
         tvDateEnd.setText(meet.meetEnd);
+        Picasso.get().load(meet.getAvatar()).into(imageAvatar);
     }
 
     @Override
@@ -202,18 +203,14 @@ public class MeetProfile extends AppCompatActivity {
         startActivityForResult(intent, PICK_IMAGE_REQURET);
     }
 
-    public void Tets(View view){
-        //uploadImage();
-    }
-
-    //Create data
-    //Autor id create
-    //Avatar
-    //Name
-    //Descr
+    //Create date +
+    //Autor id create +
+    //Avatar +
+    //Name +
+    //Descr +
     //Map point
-    //Start
-    //End
+    //Start +
+    //End +
     //Btn GO
     //User GO
 

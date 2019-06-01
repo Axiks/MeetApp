@@ -111,13 +111,6 @@
                 android:layout_height="wrap_content"
                 android:text="Image Upload" />
 
-            <Button
-                android:id="@+id/btnTest"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="Tets"
-                android:text="Button" />
-
             <TextView
                 android:id="@+id/textView20"
                 android:layout_width="match_parent"
