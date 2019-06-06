@@ -14,7 +14,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recView"
             android:layout_width="match_parent"
-            android:layout_height="477dp">
+            android:layout_height="477dp"
+            android:clipToPadding="true">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -26,7 +27,7 @@
 
         <Button
             android:id="@+id/button4"
-            android:layout_width="428dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="loginActivity"
             android:text="Login" />

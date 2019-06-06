@@ -33,7 +33,6 @@ import java.util.jar.Attributes;
 
 public class MainActivity extends AppCompatActivity {
     public MeetAdapter meetAdapter;
-    public FirebaseAuth mAuth;
     public DatabaseReference myRef;
     public FirebaseDatabase database;
     public RecyclerView numbersList;
@@ -52,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
         numbersList = (RecyclerView) findViewById(R.id.recView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);//Виводимо у вигляді списку
         numbersList.setLayoutManager(layoutManager);
-
-        mAuth = FirebaseAuth.getInstance();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Meets");

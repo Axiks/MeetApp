@@ -1,6 +1,10 @@
 package com.example.meatrow;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.squareup.picasso.Transformation;
 
 import com.squareup.picasso.Picasso;
 
@@ -58,9 +63,9 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder
             super(itemView);
             meetAvatarView = itemView.findViewById(R.id.meet_avatar_view);
             meetNameView = itemView.findViewById(R.id.meet_name_view);
-            meetDescriptionView = itemView.findViewById(R.id.meet_description_view);
+            //meetDescriptionView = itemView.findViewById(R.id.meet_description_view);
             meetDateView = itemView.findViewById(R.id.meet_date_view);
-            meetTimeView = itemView.findViewById(R.id.meet_time_view);
+            //meetTimeView = itemView.findViewById(R.id.meet_time_view);
             meetUserCountView = itemView.findViewById(R.id.meet_count_view);
 
             //Обработчик натиснень
@@ -84,14 +89,13 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder
             Log.d(TAG, "bind Start");
             Log.d(TAG, "bind NAme: "+meet.name);
             meetNameView.setText(meet.name);
-            Log.d(TAG, "bind Desc: "+meet.description);
-            meetDescriptionView.setText(meet.description);
-            Log.d(TAG, "bind Count: "+meet.meetStart);
-            meetUserCountView.setText(meet.meetStart);
+//            Log.d(TAG, "bind Desc: "+meet.description);
+//            meetDescriptionView.setText(meet.description);
+//            Log.d(TAG, "bind Count: "+meet.meetStart);
+            meetDateView.setText(meet.meetStart);
+//            meetUserCountView.setText("");
             //meetAvatarView.
-            Picasso.get().load(meet.getAvatar()).into(meetAvatarView);
-            //Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/meet-f86fb.appspot.com/o/uploads%2Fimages%2Fd40376b4-f54e-4487-8c20-416782459c10?alt=media&token=cb89bb54-a963-474e-8886-03a7e0c827a4").into(meetAvatarView);
-            //Log.d(TAG, "mmmmmm: " + meet.getAvatarHref());
+            Picasso.get().load(meet.getAvatar()).transform(new CircleTransform()).into(meetAvatarView);
             Log.d(TAG, "bind End");
         }
     }
@@ -106,5 +110,41 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder
     public  void clearItems(){
         meetList.clear();
         notifyDataSetChanged();
+    }
+}
+
+//Circle avatar
+class CircleTransform implements Transformation {
+    @Override
+    public Bitmap transform(Bitmap source) {
+        int size = Math.min(source.getWidth(), source.getHeight());
+
+        int x = (source.getWidth() - size) / 2;
+        int y = (source.getHeight() - size) / 2;
+
+        Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
+        if (squaredBitmap != source) {
+            source.recycle();
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
+
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        BitmapShader shader = new BitmapShader(squaredBitmap,
+                BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
+        paint.setShader(shader);
+        paint.setAntiAlias(true);
+
+        float r = size / 2f;
+        canvas.drawCircle(r, r, r, paint);
+
+        squaredBitmap.recycle();
+        return bitmap;
+    }
+
+    @Override
+    public String key() {
+        return "circle";
     }
 }

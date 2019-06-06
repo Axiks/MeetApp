@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,12 +50,14 @@ import java.util.UUID;
 public class MeetProfile extends AppCompatActivity {
     private static final  int PICK_IMAGE_REQURET = 1;
     private static final String TAG = "Neko";
-    public FirebaseAuth uAuth;
+    public FirebaseUser userAuth;
     public DatabaseReference refMeets;//
     public MeetAdapter participantsAdapter;
     public Meet meet;
     public StorageReference mStorageRef;//
     private Uri mImageUri;//
+    public List<Participant> participants = new ArrayList<>();//Учасники клубу Link
+    public List<User> users = new ArrayList<>();//Учасники клубу Link
 
     TextView tvCreateDate;
     TextView tvCreator;
@@ -65,7 +68,6 @@ public class MeetProfile extends AppCompatActivity {
     Button btnCome;
     Button btnEdit;
     Button btnDestroy;
-    Button btnUpload;
     ImageView imageAvatar;
     RecyclerView recTeams;
 
@@ -83,25 +85,36 @@ public class MeetProfile extends AppCompatActivity {
         btnCome = findViewById(R.id.btnCome);
         btnEdit = findViewById(R.id.btnEdit);
         btnDestroy = findViewById(R.id.btnDestroy);
-        btnUpload = findViewById(R.id.btnUpload);
         imageAvatar = findViewById(R.id.imageAvatar);
         recTeams = findViewById(R.id.recTeams);
 
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
 
-        Bundle extras = getIntent().getExtras();
-        String meetID = extras.getString("meetId");
-
         meet = new Meet();
+
+        Bundle extras = getIntent().getExtras();
+        final String meetID = extras.getString("meetId");
+        meet.id = meetID;
+
+
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);//Виводимо у вигляді списку
         recTeams.setLayoutManager(layoutManager);
 
-        uAuth = FirebaseAuth.getInstance();
+        userAuth = FirebaseAuth.getInstance().getCurrentUser();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         refMeets = database.getReference("Meets");
         Query query = database.getReference("Meets").orderByKey().equalTo(meetID);//Id
+
+        btnCome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(userAuth.getUid() != null){
+                    createParticipant(userAuth.getUid(), meetID);
+                }
+            }
+        });
 
         /*Meet out*/
         ValueEventListener meetListener = new ValueEventListener() {
@@ -125,13 +138,7 @@ public class MeetProfile extends AppCompatActivity {
         };
         //refMeets.addValueEventListener(meetListener);
         query.addValueEventListener(meetListener);
-
-        btnUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFileChhooser();
-            }
-        });
+        getParticipant();
     }
 
     public void Render(){
@@ -154,53 +161,72 @@ public class MeetProfile extends AppCompatActivity {
             mImageUri = data.getData(); //patch
 
             Picasso.get().load(mImageUri).into(imageAvatar);
-
-            uploadImage(); //Upload Img to Server
         }
     }
 
-    //update user info
-    private void uploadImage(){
-        if(mImageUri != null){
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("Upload...");
-            progressDialog.show();
-
-            StorageReference reference = mStorageRef.child("images/" + UUID.randomUUID().toString());
-            reference.putFile(mImageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(MeetProfile.this, "Upload succeful", Toast.LENGTH_SHORT).show();
-                            progressDialog.cancel();
-
-                            //Добавлення записі об фотці в бд
-                        }
-                    })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(MeetProfile.this, "Unsuccessful uploads", Toast.LENGTH_SHORT).show();
-                }
-            })
-            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                    progressDialog.setMessage("Upload "+(int)progress+"%");
-                }
-            })
-            ;
-        }else {
-            Toast.makeText(this, "No file seelcted", Toast.LENGTH_SHORT).show();
-        }
+    public void createParticipant(String userId, String meetId){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference refParticipant = database.getReference("Participant");
+        Participant participant = new Participant();
+        participant.setUserId(userId);
+        participant.setMeetId(meetId);
+        refParticipant.push().setValue(participant);
     }
 
-    public void openFileChhooser(){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, PICK_IMAGE_REQURET);
+    public void getParticipant(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        Query query = database.getReference("Participant").orderByChild("meetId").equalTo(meet.id);//Запит
+
+
+        ValueEventListener partListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                // Get Post object and use the values to update the UI
+                Log.d(TAG ,"Count "+snapshot.getChildrenCount());
+                for (DataSnapshot partSnapshot: snapshot.getChildren()) {
+                    Participant part = partSnapshot.getValue(Participant.class);
+                    participants.add(part);
+                    Log.w(TAG, "Part User Id: " + part.userId);
+                    //getUser("eAVHIHBWN4gyYoGqNutsVNq8RSG3");
+                }
+                Log.w(TAG, "Part count: " + participants.size());
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        query.addValueEventListener(partListener);
+
+        //GetUser
+
+
+    }
+
+    public void getUser(String userId){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        Query query = database.getReference("Users").orderByKey().equalTo(userId);//Запит
+
+        ValueEventListener userListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                // Get Post object and use the values to update the UI
+                Log.d(TAG ,"Count user"+snapshot.getChildrenCount());
+                for (DataSnapshot userSnapshot: snapshot.getChildren()) {
+                    User user = userSnapshot.getValue(User.class);
+                    users.add(user);
+                    Log.w(TAG, "User id " + user.Id);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "user:onCancelled", databaseError.toException());
+            }
+        };
+        query.addValueEventListener(userListener);
+
     }
 
     //Create date +
@@ -212,7 +238,7 @@ public class MeetProfile extends AppCompatActivity {
     //Start +
     //End +
     //Btn GO
-    //User GO
+    //User GO List
 
     //if(autor_id == curent_id)
         //Destroy
