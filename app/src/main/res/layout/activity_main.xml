@@ -11,33 +11,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recView"
+        <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="317dp"
-            android:clipToPadding="true">
-
-        </android.support.v7.widget.RecyclerView>
-
-        <TextView
-            android:id="@+id/mainUid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="loginActivity"
-            android:text="Login" />
-
-        <Button
-            android:id="@+id/meetCreateBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="meetCreateActivity"
-            android:text="Create Meet" />
+            android:layout_height="match_parent"
+            android:layout_marginBottom="56dp">
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -51,4 +30,5 @@
         app:itemTextColor="#ffffff"
         android:layout_gravity="bottom"
         app:menu="@menu/menu_bottom_navigation"/>
+
 </FrameLayout>

@@ -3,13 +3,13 @@
     <item
         android:id="@+id/action_map"
         android:icon="@android:drawable/ic_dialog_map"
-        android:title="@string/map"/>
+        android:title="Головна"/>
     <item
         android:id="@+id/action_dial"
-        android:icon="@android:drawable/ic_dialog_dialer"
-        android:title="Choto" />
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Пошук" />
     <item
         android:id="@+id/action_mail"
-        android:icon="@android:drawable/ic_dialog_email"
-        android:title="Loli" />
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:title="Профіль" />
 </menu>
