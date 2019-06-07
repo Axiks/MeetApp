@@ -3,14 +3,17 @@ package com.example.meatrow;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
     public FirebaseDatabase database;
     public RecyclerView numbersList;
 
+    public ImageView imgMap;
+    public ImageView imgDial;
+    public ImageView imgMail;
+
     TextView uId;
     private static final String TAG = "Neko";
     public List<Meet> meets = new ArrayList<>();
@@ -45,6 +52,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottom_nav);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_map:
+
+                                break;
+                            case R.id.action_dial:
+
+                                break;
+                            case R.id.action_mail:
+                                Intent intent = new Intent(getBaseContext(), MeetCreate.class);
+                                startActivity(intent);
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+
+
+
 
         uId = (TextView) findViewById(R.id.mainUid);
         /*Rec View*/
