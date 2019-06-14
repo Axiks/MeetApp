@@ -1,16 +1,26 @@
 package com.example.meatrow;
 
+import android.util.Log;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class User {
-    int Id;
-    private String name;
+public class User implements Serializable {
+    public String id;
+    public String name;
     private String surname;
     private String description;
     private Date birthday;
-    private String avatar_src;
+    public String avatar_src;
     private List<String>  preferenceTags;
     private List<String> socialLinks;
 
@@ -19,7 +29,8 @@ public class User {
         socialLinks = new ArrayList<>();
     }
 
-    User(String name, String surname, String description, Date birthday){
+    User(String id, String name, String surname, String description, Date birthday){
+        this.id = id;
         setName(name);
         setSurname(surname);
         setDescription(description);
@@ -29,8 +40,8 @@ public class User {
         socialLinks = new ArrayList<>();
     }
 
-    public  Integer getId(){
-        return Id;
+    public  String getId(){
+        return id;
     }
     public String getName ( )
     {
@@ -87,10 +98,10 @@ public class User {
         return preferenceTags;
     }
 
-    public void setPreferenceTags (List<String> userPreferenceTags)
-    {
-        preferenceTags = userPreferenceTags;
-    }
+//    public void setPreferenceTags (List<String> userPreferenceTags)
+//    {
+//        preferenceTags = userPreferenceTags;
+//    }
 
     public void setPreferenceTags (String userPreferenceTag)
     {
@@ -102,13 +113,39 @@ public class User {
         return socialLinks;
     }
 
-    public void setSocialLinks (List<String> userSocialLinks)
-    {
-        socialLinks = userSocialLinks;
-    }
+//    public void setSocialLinks (List<String> userSocialLinks)
+//    {
+//        socialLinks = userSocialLinks;
+//    }
 
     public void setSocialLinks (String userSocialLink)
     {
         socialLinks.add(userSocialLink);
     }
+
+    public  void getUserData(String userId){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        Query userQ = database.getReference("Users").orderByChild("id").equalTo(userId);
+        ValueEventListener userListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                    User userData = userSnapshot.getValue(User.class);
+
+                    setName(userData.getName());
+                    setSurname(userData.getSurname());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+
+                // ...
+            }
+        };
+        userQ.addValueEventListener(userListener);
+    }
+
 }

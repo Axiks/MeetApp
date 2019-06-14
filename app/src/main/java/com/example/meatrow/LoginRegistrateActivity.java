@@ -111,9 +111,15 @@ public class LoginRegistrateActivity extends AppCompatActivity{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference usersDB = database.getReference("Users");
+                            User userData = new User(user.getUid(), null, null, null, null);
+                            usersDB.push().setValue(userData);
+                            Log.d(TAG, "Create help user table");
+
                             toastSuc.show();
                             userInfo();
                         } else {

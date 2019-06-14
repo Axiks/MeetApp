@@ -1,6 +1,7 @@
 package com.example.meatrow;
 
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -56,11 +58,15 @@ public class MeetCreate extends AppCompatActivity {
 
     EditText Name;
     EditText Description;
+    EditText startTime;
+    EditText endTime;
     CalendarView MeetStartData;
     CalendarView MeetEndData;
     ImageView ImageAvatar;
     Button BtnLoadAvatar;
     Button MeetCreate;
+
+    TimePickerDialog timePickerDialog;
 
     String name;
     String description;
@@ -78,6 +84,8 @@ public class MeetCreate extends AppCompatActivity {
         MeetEndData = (CalendarView) findViewById(R.id.meetEnd);
         BtnLoadAvatar = (Button) findViewById(R.id.btnLoadAvatar);
         ImageAvatar = (ImageView) findViewById(R.id.imageAvatar);
+        startTime = findViewById(R.id.meetStartTime);
+        endTime = findViewById(R.id.meetStartTime);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Meets");
@@ -97,6 +105,18 @@ public class MeetCreate extends AppCompatActivity {
             startActivity(intent);
             //uId.setText("Вхід не виконаний");
         }
+
+        startTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               timePickerDialog = new TimePickerDialog(MeetCreate.this, new TimePickerDialog.OnTimeSetListener() {
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+
+                    }
+                }, 0, 0, false);
+               timePickerDialog.show();
+            }
+        });
 
         MeetStartData.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 

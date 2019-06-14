@@ -70,6 +70,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <EditText
+                android:id="@+id/meetStartTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="time" />
+
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="match_parent"
@@ -80,6 +87,13 @@
                 android:id="@+id/meetEnd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/meetEndTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="time" />
 
             <Button
                 android:id="@+id/meetCreateBtn"
