@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -64,6 +65,8 @@ public class MeetProfile extends AppCompatActivity {
     public List<Participant> participants = new ArrayList<>();//Учасники клубу Link
     public List<User> users = new ArrayList<>();//Учасники клубу Link
 
+    boolean userCome;
+
     public FirebaseDatabase database;
 
     TextView tvCreateDate;
@@ -77,7 +80,7 @@ public class MeetProfile extends AppCompatActivity {
     Button btnDestroy;
     ImageView imageAvatar;
     LinearLayout adminView;
-    ListView partLv;
+    RecyclerView recPart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,14 +96,19 @@ public class MeetProfile extends AppCompatActivity {
         btnEdit = findViewById(R.id.btnEdit);
         btnDestroy = findViewById(R.id.btnDestroy);
         imageAvatar = findViewById(R.id.imageAvatar);
-        partLv = findViewById(R.id.partLV);
+        recPart = findViewById(R.id.recPart);
 
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
+
+        userCome = false;
 
         meet = new Meet();
 
         adminView =  findViewById(R.id.adminLinear);
         adminView.setVisibility(View.GONE);
+
+        btnCome.setVisibility(View.GONE);
+
         tvCreator.setText("No name");
 
         Bundle extras = getIntent().getExtras();
@@ -118,8 +126,15 @@ public class MeetProfile extends AppCompatActivity {
         btnCome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userAuth.getUid() != null){
-                    createParticipant(userAuth.getUid(), meetID);
+                if(userAuth.getUid() != null ){
+                    if(!userCome){
+                        createParticipant(userAuth.getUid(), meetID);
+                        userCome = true;
+                    }
+                    else {
+                        unLinkPart();
+                        userCome = false;
+                    }
                 }
             }
         });
@@ -156,8 +171,96 @@ public class MeetProfile extends AppCompatActivity {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
             }
         };
+
         //refMeets.addValueEventListener(meetListener);
         query.addValueEventListener(meetListener);
+
+        /*Part Out*/
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);//LM Який виводить елементи у вигляді списку
+        recPart.setLayoutManager(layoutManager);
+        recPart.setHasFixedSize(true); //Ми знаємо кількість елементів у списку
+        // this is data fro recycler view
+
+
+        final List<User> userss = new ArrayList<>();
+        Query query2 = database.getReference("Participant").orderByChild("meetId").equalTo(meet.id);//Запит
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                // Get Post object and use the values to update the UI
+//                List<Participant> parts = new ArrayList<>();
+                Log.d(TAG, "Count parts" + snapshot.getChildrenCount());
+                int forNowCount = 0;
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+//                    Participant part = postSnapshot.getValue(Participant.class);
+//                    part.userId = postSnapshot.getValue(Participant.class).userId;
+//                    part.meetId = postSnapshot.getValue(Participant.class).meetId;
+//                    parts.add(part);
+                    Log.d(TAG, "Key: " + postSnapshot.getKey());
+                    Log.d(TAG, "Value: " + postSnapshot.getValue(Participant.class).meetId);
+                    Log.d(TAG, "Value: " + postSnapshot.getValue(Participant.class).userId);
+
+
+                /*2*/
+                Query query3 = database.getReference("Users").orderByChild("id").equalTo(postSnapshot.getValue(Participant.class).userId);
+                ValueEventListener postListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        // Get Post object and use the values to update the UI
+
+                        Log.d(TAG, "Count users" + snapshot.getChildrenCount());
+                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                            User user = postSnapshot.getValue(User.class);
+                            userss.add(user);
+                            Log.d(TAG, "Key User: " + postSnapshot.getKey());
+                            Log.d(TAG, "Value id User: " + postSnapshot.getValue(User.class).id);
+                            Log.d(TAG, "Value name User: " + postSnapshot.getValue(User.class).getName());
+                        }
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Getting Post failed, log a message
+                        Log.w(TAG, "loadPart:onCancelled", databaseError.toException());
+                    }
+                };
+                query3.addValueEventListener(postListener);
+                forNowCount ++;
+
+                    if(forNowCount == snapshot.getChildrenCount()){
+                        // 3. create an adapter
+                        Log.d(TAG, "Create Adapter");
+                        ParticipantAdapter participantAdapter = new ParticipantAdapter();
+                        // 4. set adapter
+                        Log.d(TAG, "Set Adapter");
+                        recPart.setAdapter(participantAdapter);
+                        // 5. set item animator to DefaultAnimator
+                        Log.d(TAG, "Set item animator to DefaultAnimator");
+                        participantAdapter.setItems(userss);
+                        userss.clear();
+                    }
+
+
+            }
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPart:onCancelled", databaseError.toException());
+            }
+        };
+        query2.addValueEventListener(postListener);
+
+
+
 
 
         btnDestroy.setOnClickListener(new View.OnClickListener(){
@@ -249,11 +352,24 @@ public class MeetProfile extends AppCompatActivity {
                     Log.d(TAG, "Part User Id: " + part.userId);
                     Log.d(TAG, "Part Meet Id: " + part.meetId);
                     //getUser("eAVHIHBWN4gyYoGqNutsVNq8RSG3");
+                    if (userAuth.getUid().equals(part.userId)){
+                        userCome = true;
+                    }
                 }
                 Log.d(TAG ,"Part obj Count " + participants.size());
                 Log.w(TAG, "Part count: " + participants.size());
 //                AdapterPerson adbPerson;
 //                ArrayAdapter arrayAdapter = new ArrayAdapter(this, partLv, participants, participants);
+
+                btnCome.setVisibility(View.VISIBLE);
+                if(userCome){
+                    btnCome.setText("Передумав");
+                    btnCome.setTextColor(Color.parseColor("#f42702"));
+                }
+                else {
+                    btnCome.setText("Відвідаю");
+                    btnCome.setTextColor(Color.parseColor("#03A9F4"));
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -273,6 +389,29 @@ public class MeetProfile extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void unLinkPart(){
+        Log.d(TAG ,"Un Link Part ");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        Query query = database.getReference("Participant").orderByChild("userId").equalTo(userAuth.getUid());//Запит
+
+        ValueEventListener partListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                // Get Post object and use the values to update the UI
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                for (DataSnapshot partSnapshot: snapshot.getChildren()) {
+                    if(partSnapshot.getValue(Participant.class).meetId.equals(meet.id) ){
+                        database.getReference("Participant").child(partSnapshot.getKey()).removeValue();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadPart:onCancelled", databaseError.toException());
+            }
+        };
+        query.addListenerForSingleValueEvent(partListener);
+    }
     //Create date +
     //Autor id create +
     //Avatar +

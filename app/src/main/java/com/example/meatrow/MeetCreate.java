@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
@@ -61,7 +62,6 @@ public class MeetCreate extends AppCompatActivity {
     EditText startTime;
     EditText endTime;
     CalendarView MeetStartData;
-    CalendarView MeetEndData;
     ImageView ImageAvatar;
     Button BtnLoadAvatar;
     Button MeetCreate;
@@ -78,10 +78,11 @@ public class MeetCreate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meet_create);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN); //Auto Open Keyboard none
+
         Name = (EditText) findViewById(R.id.name);
-        Description = (EditText) findViewById(R.id.description);
+        Description = findViewById(R.id.description);
         MeetStartData = (CalendarView) findViewById(R.id.meetStart);
-        MeetEndData = (CalendarView) findViewById(R.id.meetEnd);
         BtnLoadAvatar = (Button) findViewById(R.id.btnLoadAvatar);
         ImageAvatar = (ImageView) findViewById(R.id.imageAvatar);
         startTime = findViewById(R.id.meetStartTime);
@@ -111,9 +112,9 @@ public class MeetCreate extends AppCompatActivity {
             public void onClick(View v) {
                timePickerDialog = new TimePickerDialog(MeetCreate.this, new TimePickerDialog.OnTimeSetListener() {
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-
+                        startTime.setText(hourOfDay+":"+minutes);
                     }
-                }, 0, 0, false);
+                }, 0, 0, true);
                timePickerDialog.show();
             }
         });
@@ -127,20 +128,6 @@ public class MeetCreate extends AppCompatActivity {
                 int mMonth = month;
                 int mDay = dayOfMonth;
                 meetStart = new StringBuilder().append(mDay).append("/").append(mMonth + 1)
-                        .append("/").append(mYear)
-                        .append(" ").toString();
-            }
-        });
-
-        MeetEndData.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year,
-                                            int month, int dayOfMonth) {
-                int mYear = year;
-                int mMonth = month;
-                int mDay = dayOfMonth;
-                meetEnd = new StringBuilder().append(mDay).append("/").append(mMonth + 1)
                         .append("/").append(mYear)
                         .append(" ").toString();
             }
@@ -234,6 +221,8 @@ public class MeetCreate extends AppCompatActivity {
     }
 
     private void meetCretor(String avatarSrc){
+        meetStart = meetStart + " " + startTime.getText();
+
         name = Name.getText().toString();
         description = Description.getText().toString();
         meet = new Meet(curUser.getUid(), name, description, meetStart, meetEnd);
@@ -242,6 +231,7 @@ public class MeetCreate extends AppCompatActivity {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         String strDate = formatter.format(date);
         meet.create_meeting = strDate;
+
 
        // String serverAvaSrc = uploadImage(); //Upload Img to Server
         meet.setAvatar(avatarSrc);

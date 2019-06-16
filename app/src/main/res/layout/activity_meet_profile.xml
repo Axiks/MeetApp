@@ -263,6 +263,11 @@
                     android:layout_marginBottom="10dp"
                     android:orientation="vertical">
 
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recPart"
+                        android:layout_width="match_parent"
+                        android:layout_height="218dp" />
+
                     <TextView
                         android:id="@+id/textView20"
                         android:layout_width="match_parent"
@@ -270,11 +275,6 @@
                         android:text="Список тих хто піде"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
-                    <ListView
-                        android:id="@+id/partLV"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
 
                     <TextView
                         android:id="@+id/textView23"

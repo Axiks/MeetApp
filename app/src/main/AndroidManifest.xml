@@ -20,7 +20,6 @@
         <activity
             android:name=".LoginRegistrateActivity"
             android:label="@string/title_activity_login_registrate" />
-        <activity android:name=".Activity2" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
